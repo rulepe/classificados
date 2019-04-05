@@ -1,0 +1,135 @@
+body {
+	padding-bottom: 30px;
+}
+
+/* Upload */
+.cla-upload {
+	padding: 15px;
+	
+	border: 1px dashed #ddd;
+	border-radius: 4px;
+	background: #fafafa;
+	
+	text-align: center;
+}
+
+.cla-upload-form-file {
+	display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1px;
+}
+
+.cla-upload-form-file > input[type=file] {
+	position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+    
+    font-size: 500px;
+}
+
+.cla-img-upload > img {
+	width: 150px;
+	height: 150px;
+}
+
+.js-remove-foto > img{
+	width: 8px;
+	height: 8px;	
+}
+
+.foto-item > img {
+	width: 200px;
+	height: 200px;
+}
+
+/********Table************/
+.img-tabela img{
+	width: 80px;
+	height: 80px;
+}
+/*************************/
+
+/*******Carousel**********/
+.carousel-container{
+	margin-top: 1.5%;
+}
+
+.fotos-carousel {
+	background-color: black;
+}
+
+.fotos-carousel img{
+	width: 350px;
+}
+
+/*******INICIO PAGINA NOVO**********/
+
+.novo-foto-anuncio{
+	border: 1px solid #e2e2e2;
+	border-radius: 8px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+}
+
+.novo-foto-anuncio img{
+	display: block;
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.custom-file-label::after{
+	content: "";
+}
+
+.input-group-prepend{
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+/******FIM PAGINA NOVO**************/
+
+
+/****INICIO MEUS ANUNCIOS*/
+
+.container{
+	margin-top: 20px;
+}
+
+.conteudo{
+	margin-top: 50px;
+}
+
+.bt-style{
+	width: 76px;
+	margin: 2px 8px 4px 0px;
+	padding: 0px;
+}
+
+.img-m-anuncios{
+	width: 70px;
+}
+
+/****FIM MEUS ANUNCIOS****/
+
+/*******Footer************/
+
+.body-content{
+  /** Altura do rodapé tem que ser igual a isso aqui e vice-versa **/
+padding-top: 21%;
+}
+
+.fixarRodape {
+	
+	bottom: 0;
+}
+
+/*************************/

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Classificados</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+
+</head>
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="./" class="navbar-brand">Classificados</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a th:href="@{/cadastre-se}">Cadastrar</a></li>
+				<li><a href="@{/login}">Login</a></li>
+			</ul>		
+		</div>	
+	</nav>
+	
+	<div class="container">
+		<h1>Página não autorizada !</h1>
+		
+		<a class="btn btn-secondary" th:href="@{/meus-anuncios}">Retornar</a>
+	</div>
+	
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+</body>
+</html>

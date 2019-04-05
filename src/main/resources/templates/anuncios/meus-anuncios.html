@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Classificados</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/meus-anuncios.css">
+
+</head>
+<body>
+
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="../" class="navbar-brand">Classificados</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" th:text="${usuarioLogado.nome}"></a></li>
+				<li><a href="/logout">Sair</a></li>
+			</ul>		
+		</div>	
+	</nav>
+
+	<div class="container">
+		<h1>Meus Anúncios</h1>
+
+		<div class="alert alert-success" th:if="${!#strings.isEmpty(msgSucesso)}">
+				<strong>Parabéns!</strong> <span th:text="${msgSucesso}"></span>
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		
+		<div class="alert alert-warning" th:if="${!#strings.isEmpty(msgExcluido)}">
+				<span th:text="${msgExcluido}"></span>
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	
+		<div class="row conteudo">
+				<a id="bt-adicionar" th:href="@{/add-anuncio}"  class="btn btn-secondary col-md-3">Adicionar Anúncio</a>
+				<div class="col-md-7"></div>
+				<a id="bt-voltar" th:href="@{./}"  class="btn btn-secondary col-md-2">Voltar</a>
+					
+			<div class="table-responsive-sm">
+				<table class=" table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>FOTO</th>
+							<th>TÍTULO</th>
+							<th>VALOR</th>
+							<th>CONSERVAÇÃO</th>
+							<th>DESCRIÇÃO</th>
+							<th>AÇÕES</th>					
+						</tr>
+					</thead>
+					<tbody>
+							<tr th:each="anuncio : ${anuncios}">
+							<td th:text="${anuncio.id}"></td>
+							<td th:if="${anuncio.foto == ''}"><img alt="Foto" class="img-fluid img-m-anuncios" th:src="@{/images/anuncios/default.jpg}">
+								<td th:if="${anuncio.foto != ''}"><img alt="Foto" class="img-fluid img-m-anuncios" th:src="${anuncio.tempFoto}">
+							</td>
+							<td th:text="${anuncio.titulo}"></td>
+							<td th:text="${anuncio.valor}"></td>
+							<td th:text="${anuncio.conservacao}"></td>
+							<td th:text="${anuncio.descricao}"></td>
+							<td><a th:href="@{/editar/{id_anuncio}(id_anuncio = ${anuncio.id})}" class="btn btn-primary bt-style">Editar</a><a th:href="@{/excluir/{id_anuncio}(id_anuncio = ${anuncio.id})}" class="btn btn-danger bt-style">Excluir</a></td>
+						</tr>
+					</tbody>						
+				</table>
+				<div th:if="${#lists.size(anuncios) <= 0}">
+					<span th:text="|Nenhum anuncio encontrado.|"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+</body>
+</html>

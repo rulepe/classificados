@@ -1,0 +1,14 @@
+<script id="foto-classificados" type="text/x-handlebars-template">
+	<div class="row  js-foto-classificados">
+		<div class="col-md-4"></div>
+			<div class="col-md-4  text-center">
+				<a href="#" class="thumbnail cla-img-upload">
+					<img th:src="@{/fotos/temp/{{nomeFoto}}}"></img>
+				</a>
+				<div>
+					<button type="button" class="btn  btn-link  js-remove-foto"><img th:src="@{/images/excluir.png}"/></button>
+				</div>
+			</div>
+		<div class="col-md-4"></div>
+	</div>
+</script>

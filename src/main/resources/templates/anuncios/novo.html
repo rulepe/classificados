@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Classificados</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/stylesheets/uikit/css/uikit.css}"/>
+<link rel="stylesheet" th:href="@{/stylesheets/uikit/css/uikit.min.css}"/>
+
+</head>
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="../" class="navbar-brand">Classificados</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" th:text="${usuarioLogado.nome}"></a></li>
+				<li><a href="/logout">Sair</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h1>
+			<a th:href="@{/meus-anuncios}">Meus Anúncios</a> - Adicionar novo
+			anúncio
+		</h1>
+		
+		<div class="alert alert-warning" th:each = "mensagem: ${msgAlerta}" th:if="${not #strings.isEmpty(msgAlerta)}">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<span th:text="${mensagem}"></span>
+		</div>
+		
+		<div class="alert alert-success" th:if="${!#strings.isEmpty(msgSucesso)}">
+				<strong>Parabéns!</strong> <span th:text="${msgSucesso}"></span>
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		
+		<div class="alert alert-warning" th:if="${!#strings.isEmpty(msgExcluido)}">
+				<span th:text="${msgExcluido}"></span>
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<form th:action="@{/salvaranuncio}" method="post"
+			enctype="multipart/form-data" th:object="${anuncios}">
+
+			<!-- 				<div class="form-group"> -->
+			<!-- 					<label for="titulo">ID Usuário</label> -->
+			<!-- 					<input type="text" th:value="${usuarioLogado.id}" class="form-control" disabled="disabled"/> -->
+			<!-- 				</div> -->
+
+
+<!-- 			<div class="form-group" th:if="${#strings.isEmpty(idnovo)}"> -->
+<!-- 				<label for="id">ID Anúncio</label> <input type="text" name="id" -->
+<!-- 					id="id" class="form-control" th:disabled="disabled" -->
+<!-- 					th:field="${anuncios.id}" /> -->
+<!-- 			</div> -->
+
+			<div class="form-group" hidden="true">
+				<label for="id">ID Anúncio</label> <input type="text" name="id"
+					id="id" class="form-control" th:field="${anuncios.id}" />
+			</div>
+
+			<div class="form-group">
+				<label for="categoria">Categoria:</label> <select name="categoria"
+					id="categoria" class="form-control" th:object="${categorias}">
+					<option value=""></option>
+					<option th:each="categoria : ${categorias}"
+						th:value="${categoria.id}" th:text="${categoria.nome}"
+						th:field="${anuncios.categoria}"></option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="titulo">Titulo:</label> <input type="text" name="titulo"
+					id="titulo" class="form-control" th:field="${anuncios.titulo}" />
+			</div>
+
+			<div class="form-group">
+				<label for="valor">Valor:</label> 
+				<input type="number" name="valor"
+					id="valor" class="form-control  js-decimal" th:field="${anuncios.valor}"/>
+			</div>
+
+			<div class="form-group">
+				<label for="estado">Estado de Conservação:</label> <select
+					name="conservacao" id="conservacao" class="form-control"
+					th:field="${anuncios.conservacao}">
+					<option value=""></option>
+					<option value="0">Ruim</option>
+					<option value="1">Bom</option>
+					<option value="2">Ótimo</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="descricao">Descrição:</label>
+				<textarea rows="3" cols="12" class="form-control" name="descricao"
+					th:field="${anuncios.descricao}"></textarea>
+			</div>
+			
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="arquivo" name="arquivo">Upload</span>
+						<div class="custom-file">
+						    <input type="file" class="custom-file-input" name="arquivo">
+						    <label class="custom-file-label" for="inputGroupFile01">Selecione a foto</label>
+						 </div>						 
+					</div>				
+				</div>
+			</div>
+			
+			<div class="form-group" th:if="${anuncios.id != null}">
+				<div class="novo-foto-anuncio" th:if="${anuncios.foto != ''}">
+					<img th:src="${anuncios.tempFoto}">
+				</div>
+				<div class="novo-foto-anuncio" th:if="${anuncios.foto == ''}">
+					<img th:src="@{/images/anuncios/default.jpg}">
+				</div>
+			</div>
+								
+			<div th:if="${#strings.isEmpty(condicao)}">
+				<input type="submit" value="Adicionar" class='btn btn-primary' /> <a
+					th:href="@{/meus-anuncios}" class='btn btn-primary'>Cancelar</a>
+			</div>
+
+			<div th:if="${!#strings.isEmpty(condicao)}">
+				<input type="submit" value="Salvar" class='btn btn-primary' /> <a
+					th:href="@{/meus-anuncios}" class='btn btn-primary'>Cancelar</a>
+			</div>
+
+		</form>
+
+	</div>
+	
+	<div class="row body-content">
+	    <footer class="col-sm-12 text-center">
+	    	<span th:text="|&copy 2019 Doug System. Todos os direitos reservados.|"> </span>
+	    </footer>
+	</div>
+
+	<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+<!-- 	<script type="text/javascript" src="/stylesheets/uikit/js/uikit.min.js"></script> -->
+    <script type="text/javascript" src="/stylesheets/uikit/js/uikit-icons.min.js"></script>
+    <script type="text/javascript" src="/stylesheets/handlebars/handlebars.min.js"></script>
+	<script type="text/javascript" src="/js/classificados-upload-foto.js"></script>
+	<script type="text/javascript" src="/js/jquery.mask.min.js"/></script>
+	
+	
+</body>
+</html>

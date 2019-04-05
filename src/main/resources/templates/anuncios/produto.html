@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Classificados</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+
+</head>
+<body>
+
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">Classificados</a>
+			</div>
+			
+			<ul class="nav navbar-nav navbar-right  flex-row sm-ml-md-auto list-inline" th:if="${usuarioLogado != null}">
+				<li class="list-inline-item"><a href="#" th:text="${usuarioLogado.nome}"></a></li>
+				<li class="list-inline-item"><a href="/meus-anuncios">Meus anúncios</a></li>
+				<li class="list-inline-item"><a href="/logout">Sair</a></li>
+			</ul>	
+			
+			<ul class="nav navbar-nav navbar-right  flex-row sm-ml-md-auto list-inline" th:if="${#strings.isEmpty(usuarioLogado)}">
+				<li class="list-inline-item"><a href="/cadastre-se">Cadastre-se</a></li>
+				<li class="list-inline-item"><a href="/meus-anuncios">Meus anúncios</a></li>
+			</ul>		
+		</div>	
+	</nav>
+	
+	<div class="container-fluid carousel-container">				
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="carousel slide fotos-carousel" data-ride="carousel" id="meuCarousel">
+					<div class="carousel-inner text-center">
+						<div class="carousel-item active" role="listbox" th:each="anuncio: ${anuncios}">
+							<img th:src="${anuncio.tempFoto}"/>
+						</div>
+					</div>
+				</div>
+				<a class="carousel-control-prev" href="#meuCarousel" role="button">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#meuCarousel" role="button">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+   					<span class="sr-only">Next</span>
+    		</a>
+			</div>
+			
+			<div class="col-sm-7">
+				<h1 th:text="${anuncios.titulo}"></h1>
+				<h4 th:text="${anuncios.categoria.nome}"></h4>
+				<p th:text="${anuncios.descricao}"></p>
+				<br/>
+				<h3 th:text="|R$ ${anuncios.valor}|"></h3>
+				<h4 th:text="|Telefone: ${anuncios.usuario.telefone}|" ></h4>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<div class="text-center">
+		<a th:href="@{/}" class="btn btn-primary">Voltar</a>
+	</div>
+	
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+</body>
+</html>

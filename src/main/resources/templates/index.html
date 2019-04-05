@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Classificados</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+
+</head>
+<body>
+
+		<nav class="navbar navbar-dark bg-dark col-sm-12">
+					<a href="./" class="navbar-brand">Classificados</a>
+				
+					<ul class="nav navbar-nav navbar-right flex-row sm-ml-md-auto list-inline" th:if="${usuarioLogado != null}">
+						<li class="list-inline-item"><a href="#" th:text="${usuarioLogado.nome}"></a></li>
+						<li class="list-inline-item"><a href="/meus-anuncios">Meus anúncios</a></li>
+						<li class="list-inline-item"><a href="/logout">Sair</a></li>
+					</ul>	
+							
+					<ul class="nav navbar-nav navbar-right flex-row sm-ml-md-auto list-inline" th:if="${#strings.isEmpty(usuarioLogado)}">
+						<li class="list-inline-item"><a href="/cadastre-se">Cadastro</a></li>
+						<li class="list-inline-item"><a href="/meus-anuncios">Meus anúncios</a></li>
+					</ul>
+		</nav>
+	
+	<div class="container-fluid">
+		<div class="jumbotron">
+			
+			<h2>Nós temos hoje <span th:text="${totalAnuncios}"></span> anúncios.</h2>
+			<p>E mais de <span th:text="${totalUsuarios}"></span> usuários cadastrados.</p>
+		</div>
+		
+		<div class='row'>
+			<div class="col-sm-3">
+				<h4>Pesquisa Avançada</h4>
+				
+				<form method="GET" action="/pesquisa">
+					<div class="form-group">
+						<label for="categoria" class="col-form-label">Categoria:</label>
+						<select id="categoria" name="categoria" class="form-control" th:object="${categorias}">
+							<option value=""></option>
+							<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}"></option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label for="preco" class="col-form-label">Preço:</label>
+						<select id="valor" name="preco" class="form-control">
+							<option value=""></option>
+							<option value="1">R$ 0 - 100</option>
+							<option value="2">R$ 101 - 499</option>
+							<option value="3">R$ 500 - 999</option>
+							<option value="4">R$ acima de 1000</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label for="estado" class="col-form-label">Estado:</label>
+						<select id="estado" name="estado" class="form-control">
+							<option value=""></option>
+							<option value="0">Ruim</option>
+							<option value="1">Bom</option>
+							<option value="2">Ótimo</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary" value="Buscar"/>
+					</div>
+				</form>
+				
+			</div>
+			<div class="col-sm-9">
+				<h2>Últimos Anúncios</h2>
+				<div class="table-responsive-sm">
+					<table class="table table-striped img-tabela">
+						<thead>
+							<tr>
+								<th>FOTO</th>
+								<th>TÍTULO</th>
+								<th>VALOR</th>
+							</tr>
+						</thead>
+						<tbody th:each="anuncios : ${paginas.conteudo}" th:if="${#strings.isEmpty(mensagemNenhum)}">
+							<tr>
+								<td>
+									<a th:href="@{/produto/{id_anuncio} (id_anuncio = ${anuncios.id})}"><img alt="Foto" th:src="${anuncios.tempFoto}"/></a>
+								</td>
+								<td>
+									<a th:href="@{/produto/{id_anuncio} (id_anuncio = ${anuncios.id})}" th:text="${anuncios.titulo}"></a><br>
+									<span th:text="${anuncios.categoria.nome}"></span>
+								</td>
+								<td>
+									<h4><span th:text="|R$ ${anuncios.valor}|"></span></h4>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div  class="col-sm-12 text-center" th:if="${totalAnuncios > 0}">
+						<ul class="pagination  pagination-sm" th:with="paginaAtual=${paginas.atual}">
+							<li class="page-item" th:classappend="${paginas.primeira} ? disabled">
+								<a th:remove="${paginas.primeira} ? tag" th:href="${paginas.urlParaPagina(paginaAtual - 1)}"><span class="page-link">&laquo;</span></a>
+							</li>
+							<th:block th:each="p : ${#numbers.sequence(1,paginas.totalPaginas)}" th:with="numeroPagina=${p - 1}">
+								<li class="page-item" th:classappend="${paginaAtual == numeroPagina} ? active">
+									<a class="page-link" th:href="${paginas.urlParaPagina(numeroPagina)}">[[${p}]]</a>
+								</li>
+							</th:block>
+							<li class="page-item" th:classappend="${paginas.ultima} ? disabled">
+								<a th:remove="${paginas.ultima} ? tag" th:href="${paginas.urlParaPagina(paginaAtual + 1)}"><span class="page-link">&raquo;</span></a>
+							</li>
+						</ul>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+<div class="row body-content">
+	    <footer class="col-sm-12 text-center">
+	    	<span th:text="|&copy 2019 Doug System. Todos os direitos reservados.|"> </span>
+	    </footer>
+</div>
+	
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+</body>
+</html>
